@@ -189,9 +189,9 @@ public class MoocDataDBAdapter {
             final String selection, final String[] selectionArgs,
             final String sortOrder) {
 
-        // TODO: Perform a query on the database with the given parameters
-        
-        return null;
+        // DONE: Perform a query on the database with the given parameters
+    	//Can it really be this easy?
+        return db.query(table, projection, selection, selectionArgs, null, null, sortOrder);
     }
 
     /**
