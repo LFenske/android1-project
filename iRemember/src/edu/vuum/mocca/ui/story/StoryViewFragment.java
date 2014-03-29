@@ -73,6 +73,9 @@ import edu.vanderbilt.mooc.R;
 import edu.vuum.mocca.orm.MoocResolver;
 import edu.vuum.mocca.orm.StoryData;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 public class StoryViewFragment extends Fragment {
 
 	private static final String LOG_TAG = StoryViewFragment.class
@@ -268,10 +271,20 @@ public class StoryViewFragment extends Fragment {
 			imageNameTV.setText(String.valueOf(storyData.imageName).toString());
 			
 			String imageMetaDataPath = String.valueOf(storyData.imageLink).toString();
+			Log.i("LAF", "imageMetaDataPath: "+imageMetaDataPath);
 			
 			// DONE - Set the URI of the ImageView to the image path stored in the string
 			// imageMetaDataPath, using the setImageURI function from the ImageView
-			imageMetaDataView.setImageURI(Uri.parse(imageMetaDataPath));
+			// This ends up being too big to display on my phone. Use Bitmap operations to make a thumbnail.
+			//imageMetaDataView.setImageURI(Uri.parse(imageMetaDataPath));
+			Bitmap image;
+			image = BitmapFactory.decodeFile(Uri.parse(imageMetaDataPath).getPath());
+			if (image != null) {
+				if (image.getHeight() > 1000 || image.getWidth() > 1000) {
+					image = Bitmap.createScaledBitmap(image, 500, 500, true);
+				}
+				imageMetaDataView.setImageBitmap(image);
+			}
 			
 			Long time = Long.valueOf(storyData.storyTime);
 			storyTimeTV.setText(StoryData.FORMAT.format(time));

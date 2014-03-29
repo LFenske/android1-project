@@ -264,7 +264,7 @@ public class CreateStoryActivity extends StoryActivityBase {
 		
 		// DONE - Add the filename to the Intent as an extra. Use the Intent-extra name
 		// from the MediaStore class, EXTRA_OUTPUT
-		intent.putExtra(MediaStore.EXTRA_OUTPUT, file.getAbsolutePath());
+		intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.parse("file://"+file.getAbsolutePath()));
 		
 		// DONE - Start a new activity for result, using the new intent and the request
 		// code CAMERA_PIC_REQUEST
@@ -285,7 +285,10 @@ public class CreateStoryActivity extends StoryActivityBase {
 		
 		// DONE - Add the filename to the Intent as an extra. Use the Intent-extra name
 		// from the MediaStore class, EXTRA_OUTPUT
-		intent.putExtra(MediaStore.EXTRA_OUTPUT, file.getAbsolutePath());
+		intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.parse("file://"+file.getAbsolutePath()));
+		// I'm getting a null intent in onActivityResult and can't extract fileUri from it.
+		// Set it here in case the intent is null.
+		fragment.fileUri = Uri.parse("file://"+file.getAbsolutePath());
 		
 		// DONE - Specify as an extra that the video quality should be HIGH. Use the
 		// Intent-extra name, EXTRA_VIDEO_QUALITY, from the MediaStore class
